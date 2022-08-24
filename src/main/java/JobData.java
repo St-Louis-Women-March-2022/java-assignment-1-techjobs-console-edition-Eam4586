@@ -5,10 +5,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -19,7 +16,6 @@ public class JobData {
     private static boolean isDataLoaded = false;
 
     private static ArrayList<HashMap<String, String>> allJobs;
-
     /**
      * Fetch list of all values from loaded data,
      * without duplicates, for a given column.
@@ -40,12 +36,15 @@ public class JobData {
             if (!values.contains(aValue)) {
                 values.add(aValue);
             }
+            System.out.println(aValue);
         }
 
         // Bonus mission: sort the results
         Collections.sort(values);
 
         return values;
+
+
     }
 
     public static ArrayList<HashMap<String, String>> findAll() {
@@ -54,7 +53,9 @@ public class JobData {
         loadData();
 
         // Bonus mission; normal version returns allJobs
+//        System.out.println(allJobs);//NEW
         return new ArrayList<>(allJobs);
+
     }
 
     /**
@@ -77,7 +78,7 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            String aValue = row.get(column.toLowerCase());
 
             if (aValue.contains(value)) {
                 jobs.add(row);
@@ -90,16 +91,27 @@ public class JobData {
     /**
      * Search all columns for the given term
      *
-     * @param value The search term to look for
-     * @return      List of all jobs with at least one field containing the value
+     * @return List of all jobs with at least one field containing the value
      */
-    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+    public static ArrayList<HashMap<String, String>> findByValue(String searchTerm) {
 
-        // load data, if not already loaded
+        // load data, if not already loaded DO NOT TOUCH
         loadData();
 
-        // TODO - implement this method
-        return null;
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs) {
+
+
+
+            String aValue = row.get(column);
+
+            if (aValue.contains(searchTerm)) {
+                jobs.add(row);
+            }
+        }
+
+        return jobs;
     }
 
     /**
@@ -141,6 +153,10 @@ public class JobData {
             System.out.println("Failed to load job data");
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<HashMap<String, String>> somejobs() {
+        return null;
     }
 
 }
