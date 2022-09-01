@@ -13,7 +13,7 @@ public class TechJobs {
     public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
-        HashMap<String, String> columnChoices = new HashMap<>();
+        HashMap<String, String> columnChoices = new HashMap<>();//columnChoices initialized
         columnChoices.put("core competency", "Skill");
         columnChoices.put("employer", "Employer");
         columnChoices.put("location", "Location");
@@ -21,7 +21,7 @@ public class TechJobs {
         columnChoices.put("all", "All");
 
         // Top-level menu options
-        HashMap<String, String> actionChoices = new HashMap<>();
+        HashMap<String, String> actionChoices = new HashMap<>(); //actionChoices initialized
         actionChoices.put("search", "Search");
         actionChoices.put("list", "List");
 
@@ -34,12 +34,12 @@ public class TechJobs {
 
             if (actionChoice == null) {
                 break;
-            } else if (actionChoice.equals("list")) {
+            } else if (actionChoice.equals("list")) {// if the user asks you to list
 
-                String columnChoice = getUserSelection("List", columnChoices);
+                String columnChoice = getUserSelection("List", columnChoices);// ask for columnChoice
 
-                if (columnChoice.equals("all")) {
-                    printJobs(JobData.findAll());
+                if (columnChoice.equals("all")) {//if columnChoice is all
+                    printJobs(JobData.findAll());//printJobs
                 } else {
 
                     ArrayList<String> results = JobData.findAll(columnChoice);
@@ -64,7 +64,7 @@ public class TechJobs {
 
                 if (searchField.equals("all")) {
                     printJobs(JobData.findByValue(searchTerm));
-                } else {
+                } else { //ADD findByColumnAndValue
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
             }
@@ -119,16 +119,21 @@ public class TechJobs {
     }
 
     // Print a list of jobs
-    private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+    private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {//method printJobs will take in an arraylist with a hash map and look at the value keys called someJobs
 
-        for (HashMap<String, String> map : someJobs) {
-            System.out.println("*****");
-            for (Map.Entry<String, String> techJobsList : map.entrySet()) {
-                System.out.println(techJobsList.getKey() + ": " + techJobsList.getValue());
+        if (someJobs.isEmpty()) {
+            System.out.print("No Results");
+
+        } else {
+
+            for (HashMap<String, String> map : someJobs) {//for someJobs go through each map
+                System.out.println("\n" + "*****");//print star line
+
+                for (Map.Entry<String, String> techJobsList : map.entrySet()) {//for map.entryset, print the key: value
+                    System.out.println(techJobsList.getKey() + ": " + techJobsList.getValue());
+                }
+                System.out.println("*****");//then print a star line
             }
-            System.out.println("*****"+ "\n");
-
-
         }
     }
 }

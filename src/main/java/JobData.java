@@ -28,15 +28,14 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-        ArrayList<String> values = new ArrayList<>();
+        ArrayList<String> values = new ArrayList<>();//creates an arrayList called values
 
-        for (HashMap<String, String> row : allJobs) {
-            String aValue = row.get(field);
+        for (HashMap<String, String> row : allJobs) {//For the hash map look at each key value pair(row) in allJobs
+            String aValue = row.get(field);//avalue is the name of each string in the keyvalue pair
 
-            if (!values.contains(aValue)) {
-                values.add(aValue);
+            if (!values.contains(aValue)) {//if the values have the string
+                values.add(aValue);//add them to aValue
             }
-            System.out.println(aValue);
         }
 
         // Bonus mission: sort the results
@@ -74,13 +73,13 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();//creates an array list called jobs to put data in
 
-        for (HashMap<String, String> row : allJobs) {
+        for (HashMap<String, String> row : allJobs) {//for each hash map or key value (AKA ROW) in allJObs
 
-            String aValue = row.get(column.toLowerCase());
+            String aValue = row.get(column).toLowerCase();//aValue is the data in the columns in lowercase
 
-            if (aValue.contains(value)) {
+            if (aValue.contains(value.toLowerCase()) && !jobs.contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -93,29 +92,26 @@ public class JobData {
      *
      * @return List of all jobs with at least one field containing the value
      */
-    public static ArrayList<HashMap<String, String>> findByValue(String searchTerm) {
+    public static ArrayList<HashMap<String, String>> findByValue(String searchTerm) {//sets up findByValue method whch takes in an array list of hash maps with strings
+        loadData();       // load data, if not already loaded DO NOT TOUCH
 
-        // load data, if not already loaded DO NOT TOUCH
-        loadData();
+        ArrayList<HashMap<String, String>> searchResults = new ArrayList<>();//creates an array list with hash maps called searchResults to hold the hash maps with the search terms
 
-        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
-
-        for (HashMap<String, String> row : allJobs) {
-
-
-
-            String aValue = row.get(column);
-
-            if (aValue.contains(searchTerm)) {
-                jobs.add(row);
+        for (HashMap<String, String> hashMaps : allJobs) {//for each loop that cycles through the array list (of hashmaps) from allJobs
+            for (Map.Entry<String, String> keyValue : hashMaps.entrySet()) {// for each keyvalue pair
+                String word = keyValue.getValue().toLowerCase();
+//                System.out.println(word.toLowerCase());//this printed everything in lowercase.
+                if (word.toLowerCase().contains(searchTerm.toLowerCase())) {// if the value in keyvalue is the search term
+                    searchResults.add(hashMaps);// add it to the searchresults
+                }
             }
         }
-
-        return jobs;
+            return searchResults;
     }
 
     /**
-     * Read in data from a CSV file and store it in a list
+     * Read in data from a CSV file and store it in a list     for (Map.Entry<String, String> techJobsList : map.entrySet()) {
+     *                 System.out.println(techJobsList.getKey() + ": " + techJobsList.getValue());
      */
     private static void loadData() {
 
@@ -157,6 +153,6 @@ public class JobData {
 
     public static ArrayList<HashMap<String, String>> somejobs() {
         return null;
-    }
+    }//I don't remember what this line is
 
 }
